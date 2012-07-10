@@ -39,6 +39,11 @@ public class POVDisplay
     	timeOption	= new Option("t",	"timing",		true,	"Timing (ms): [500]");
     	
     	options.addOption(uiOption);
+    	options.addOption(textOption);
+    	options.addOption(modeOption);
+    	options.addOption(bitsOption);
+    	options.addOption(dirOption);
+    	options.addOption(timeOption);
 	}
 	
     public static final void main ( String[] args )

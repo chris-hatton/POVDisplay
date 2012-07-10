@@ -1,5 +1,6 @@
 package com.augmental.povtext;
 
-public class POVCanvas {
-
+public class POVCanvas
+{
+	
 }

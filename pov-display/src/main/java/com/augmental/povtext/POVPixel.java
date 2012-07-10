@@ -1,5 +1,15 @@
 package com.augmental.povtext;
 
-public class POVPixel {
+import java.awt.Point;
 
+public class POVPixel extends 2DWorldObject
+{
+	private Point position;
+	
+	public POVPixel()
+	{
+		
+	}
+	
+	
 }
