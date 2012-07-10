@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -45,8 +46,6 @@ public class POVDisplay
         final POVDisplay povText = new POVDisplay();
         
         applyArgs(povText, args);
-        
-        
     }
     
     public static void applyArgs(POVDisplay povText, String[] args)
@@ -55,7 +54,7 @@ public class POVDisplay
         try { commandLine = argsParser.parse(options, args); }
         catch (ParseException e) { throw new RuntimeException(e); }
     	
-    	if(commandLine.hasOption("ui"))
+    	if(commandLine.hasOption("g"))
     	{
     		povText.getFrame().setVisible(true);
     	}
@@ -64,12 +63,12 @@ public class POVDisplay
     // Application
     
     private static int
-    	DEFAULT_PREVIEW_CANVAS_SCALE	= 8,
-    	DEFAULT_CANVAS_ASPECT_RATIO		= 8;
+    	DEFAULT_RENDER_CANVAS_SCALE	= 8,
+    	DEFAULT_CANVAS_ASPECT_RATIO	= 8;
     
     private int bits = 8;
     
-    private BufferedImage previewCanvas, outputCanvas;
+    private BufferedImage canvas, previewCanvas;
     
 	private JFrame frame = null;
 	public  JFrame getFrame()
@@ -94,9 +93,21 @@ public class POVDisplay
 	{
 		frame = new JFrame("POVText");
 		
-		outputCanvas = new BufferedImage(DEFAULT_CANVAS_ASPECT_RATIO * bits, bits, BufferedImage.TYPE_BYTE_GRAY);
+		int outputCanvasWidth = DEFAULT_CANVAS_ASPECT_RATIO * bits;
 		
-		
+		renderCanvas = new BufferedImage(DEFAULT_RENDER_CANVAS_SCALE * outputCanvasWidth, DEFAULT_RENDER_CANVAS_SCALE * bits, BufferedImage.TYPE_BYTE_GRAY);
+		outputCanvas = new BufferedImage(outputCanvasWidth, bits, BufferedImage.TYPE_BYTE_GRAY);	
+	}
+	
+	public void render()
+	{
+		renderCanvas.setRGB(0, 0, w, h, rgbArray, offset, scansize)
+	}
+	
+	private void clearImage(BufferedImage image)
+	{
+		ColorModel.getRGBdefault()
+		image.set
 	}
 
 	public static class TextPanel extends JComponent
