@@ -1,4 +1,4 @@
-package com.augmental.povtext;
+package com.augmental.pov;
 
 import java.awt.Container;
 import java.awt.Font;
@@ -20,7 +20,7 @@ import org.apache.commons.cli.ParseException;
 /**
  * Persistence-of-Vision hardware display driver application
  */
-public class POVDisplay 
+public class POV 
 {
 	// Startup
 	
@@ -48,12 +48,12 @@ public class POVDisplay
 	
     public static final void main ( String[] args )
     {
-        final POVDisplay povText = new POVDisplay();
+        final POV pov = new POV();
         
-        applyArgs(povText, args);
+        applyArgs(pov, args);
     }
     
-    public static void applyArgs(POVDisplay povText, String[] args)
+    public static void applyArgs(POV pov, String[] args)
     {
     	CommandLine commandLine;
         try { commandLine = argsParser.parse(options, args); }
@@ -61,7 +61,7 @@ public class POVDisplay
     	
     	if(commandLine.hasOption("g"))
     	{
-    		povText.getFrame().setVisible(true);
+    		pov.getFrame().setVisible(true);
     	}
     }
     
@@ -94,25 +94,25 @@ public class POVDisplay
 	private TextPanel	textPanel;
 	private Font		font;
 	
-	public POVDisplay()
+	public POV()
 	{
 		frame = new JFrame("POVText");
 		
 		int outputCanvasWidth = DEFAULT_CANVAS_ASPECT_RATIO * bits;
 		
-		renderCanvas = new BufferedImage(DEFAULT_RENDER_CANVAS_SCALE * outputCanvasWidth, DEFAULT_RENDER_CANVAS_SCALE * bits, BufferedImage.TYPE_BYTE_GRAY);
-		outputCanvas = new BufferedImage(outputCanvasWidth, bits, BufferedImage.TYPE_BYTE_GRAY);	
+		//renderCanvas = new BufferedImage(DEFAULT_RENDER_CANVAS_SCALE * outputCanvasWidth, DEFAULT_RENDER_CANVAS_SCALE * bits, BufferedImage.TYPE_BYTE_GRAY);
+		//outputCanvas = new BufferedImage(outputCanvasWidth, bits, BufferedImage.TYPE_BYTE_GRAY);	
 	}
 	
 	public void render()
 	{
-		renderCanvas.setRGB(0, 0, w, h, rgbArray, offset, scansize)
+		//renderCanvas.setRGB(0, 0, w, h, rgbArray, offset, scansize)
 	}
 	
 	private void clearImage(BufferedImage image)
 	{
-		ColorModel.getRGBdefault()
-		image.set
+		//ColorModel.getRGBdefault()
+		//image.set
 	}
 
 	public static class TextPanel extends JComponent
