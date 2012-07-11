@@ -13,10 +13,4 @@ public class POVPixelSet extends World2DObject
 		
 	}
 	
-	public void addPixel(Pixel pixel)
-	{
-		pixel.setParent
-	}
-	
-	public Iterator<Pixel> iterator() { return pixels.iterator(); }
 }

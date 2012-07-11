@@ -42,8 +42,8 @@ public class World2DObject
 	public final World2DObject getParent() { return parent; }
 	public final void setParent(World2DObject parent)
 	{
-		if(!parent.containsChild(this)) parent.addChild(this);
-		this.parent = parent;
+		if(this.parent!=null) this.parent.removeChild(this);
+		parent.addChild(this);		
 	}
 	
 	public final Point2D getAbsolutePosition()
