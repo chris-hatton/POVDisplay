@@ -2,21 +2,21 @@ package com.augmental.pov;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class World2DObject
 {
-	private Set<World2DObject> children = new HashSet<>();
+	private List<World2DObject> children = new ArrayList<>();
 
 	public void addChild(World2DObject child)
 	{
-		if(child.getParent()==null)
+		if(child.getParent()!=this)
 		{
 			children.add(child);
 			child.setParent(this);
 		}
-		else throw new RuntimeException(child+" already belongs to "+child.getParent()+". Remove it first.");
 	}
 	
 	public void removeChild(World2DObject child)
@@ -26,7 +26,6 @@ public class World2DObject
 			children.remove(child);
 			child.setParent(null);
 		}
-		else throw new RuntimeException(child+" doesn't belong to this object anyway, why try to remove it?");
 	}
 	
 	public boolean containsChild(World2DObject child)
@@ -34,38 +33,47 @@ public class World2DObject
 		return children.contains(child);
 	}
 	
-	private AffineTransform transform;
+	public Iterator<World2DObject> getChildIterator() { return children.iterator(); }
+	
+	private AffineTransform transform = new AffineTransform();
 	public final AffineTransform getTransform() { return transform; }
-	public final void setTransform(AffineTransform transform) { this.transform = transform; }
+	public final World2DObject setTransform(AffineTransform transform) { this.transform = transform; return this; }
 	
 	private World2DObject parent;
 	public final World2DObject getParent() { return parent; }
-	public final void setParent(World2DObject parent)
+	public final World2DObject setParent(World2DObject parent)
 	{
-		if(this.parent!=null) this.parent.removeChild(this);
-		parent.addChild(this);		
+		if(this.parent!=parent)
+		{
+			if(this.parent!=null )this.parent.removeChild(this);
+			this.parent = parent;
+			parent.addChild(this);	
+		}
+		return this;
 	}
 	
 	public final Point2D getAbsolutePosition()
 	{
 		AffineTransform currentTransform = new AffineTransform();
-		World2DObject position = this;
+		World2DObject currentObject = this;
 		
-		do { currentTransform.preConcatenate(position.getTransform()); }
-		while((position = position.getParent()) != null);
+		do { currentTransform.preConcatenate(currentObject.getTransform()); }
+		while((currentObject = currentObject.getParent()) != null);
 		
 		Point2D absolute = new Point2D.Double();
 		Point2D zero = new Point2D.Double(0,0);
 		return currentTransform.transform(zero,absolute);
 	}
 
-	public final void setTranslation(float x, float y )
+	public final World2DObject setTranslation(float x, float y )
 	{
 		transform = AffineTransform.getTranslateInstance((double)x, (double)y);
+		return this;
 	}
 	
-	public final void setRotation(double d)
+	public final World2DObject setRotation(double d)
 	{
 		transform = AffineTransform.getRotateInstance(d);
+		return this;
 	}
 }

@@ -37,6 +37,21 @@ public class TestRelativePosition
 	}
 	
 	@Test
+	public void testRelativePositionTranslation2()
+	{
+		World2DObject a = new World2DObject();
+		a.setTranslation(5, 0);
+		
+		World2DObject b = new World2DObject();
+		b.setParent(a);
+		b.setTranslation(0,3);
+		
+		Point2D absPosition = b.getAbsolutePosition();
+		
+		assertTrue(testPointsMatch(absPosition,new Point2D.Double(5,3)));
+	}
+	
+	@Test
 	public void testRelativePositionRotation()
 	{
 		World2DObject b = new World2DObject();
